@@ -1,0 +1,12 @@
+{% extends 'pattern.html' %}
+
+{% block body %}
+<div class="container mt-5">
+    <form action="/add_book" method="post">
+        Person
+        <input type="text" name="author" id="author" class="form-control" placeholder="author"><br>
+        <input type="text" name="name" id="name" class="form-control" placeholder="name"><br>
+        <input type="submit" class="btn btn-success" value="Добавить">
+    </form>
+</div>
+{% endblock %}

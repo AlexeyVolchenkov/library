@@ -1,0 +1,47 @@
+{% extends 'pattern.html' %}
+
+{% block title %}
+Все зарегистрированные пользователи
+{% endblock %}
+
+
+{% block body %}
+    <h1>Все зарегистрированные пользователи</h1>
+    <div class="alert alert-info">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>surname</th>
+                    <th>name</th>
+                    <th>patronymic</th>
+                    <th>date_of_issue_id</th>
+                    <th>cafedra</th>
+                    <th>passport_data</th>
+                    <th>date_of_birthday</th>
+                    <th>registration</th>
+                    <th>place_of_residence</th>
+                    <th>telephone</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for el in articles_person %}
+                    <tr>
+                        <td>{{ el.id }}</td>
+                        <td>{{ el.surname }}</td>
+                        <td>{{ el.name }}</td>
+                        <td>{{ el.patronymic }}</td>
+                        <td>{{ el.date_of_issue_id }}</td>
+                        <td>{{ el.cafedra }}</td>
+                        <td>{{ el.passport_data }}</td>
+                        <td>{{ el.date_of_birthday }}</td>
+                        <td>{{ el.registration }}</td>
+                        <td>{{ el.place_of_residence }}</td>
+                        <td>{{ el.telephone }}</td>
+                        <td><a href="/book/{{el.id}}/put" class="btn btn-warning">Изменить</a></td>
+                    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

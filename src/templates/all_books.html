@@ -1,0 +1,39 @@
+{% extends 'pattern.html' %}
+
+{% block title %}
+Все книги
+{% endblock %}
+
+
+{% block body %}
+    <h1>Все книги</h1>
+    <div class="alert alert-info">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>author</th>
+                    <th>name</th>
+                    <th>date_of_issue</th>
+                    <th>return_date</th>
+                    <th>person_id</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for el in articles_books %}
+                    <tr>
+                        <td>{{ el.id }}</td>
+                        <td>{{ el.author }}</td>
+                        <td>{{ el.name }}</td>
+                        <td>{{ el.date_of_issue }}</td>
+                        <td>{{ el.return_date }}</td>
+                        <td>{{ el.person_id }}</td>
+                        <td><a href="/book/{{el.id}}/put" class="btn btn-warning">Изменить</a>
+                            <a href="http://127.0.0.1:5001/book/{{el.id}}/delete" class="btn btn-danger">Удалить</a>
+                        </td>
+                    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
