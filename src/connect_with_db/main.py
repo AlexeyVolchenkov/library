@@ -2,6 +2,7 @@ from flask import Flask, render_template, url_for, request, redirect, url_for, j
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import json
+import pytz
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:AlEx1902345@localhost/library'
 
@@ -68,7 +69,7 @@ def get_all_book():
     return articles
 
 
-@app.route('/person/<int:id>')
+@app.route('/all_users/<int:id>')
 def get_person(id):
     info_person = Person.query.get(id)
     dict_json = {'id': info_person.id, 'surname': info_person.surname, 'name': info_person.name,
@@ -83,6 +84,8 @@ def get_person(id):
 @app.route('/book/<int:id>')
 def get_book(id):
     info_book = Book.query.get(id)
+    print(info_book)
+    print(type(info_book))
     dict_json = {'id': info_book.id, 'author': info_book.author, 'name': info_book.name,
                  'date_of_issue': info_book.date_of_issue,
                  'return_date': info_book.return_date, 'person_id': info_book.person_id}
@@ -90,11 +93,18 @@ def get_book(id):
 
 
 @app.route('/book/<int:id>/put',  methods=['PUT'])
-def put_user(id):
+def put_book(id):
     info_book = Book.query.get_or_404(id)
     info_book.author = request.json['author']
     info_book.name = request.json['name']
     info_book.person_id = request.json['person_id']
+    if int(info_book.person_id) == 0:
+        info_book.person_id = None
+        info_book.date_of_issue = None
+        info_book.return_date = datetime.now(pytz.timezone('Europe/Moscow'))
+    else:
+        info_book.date_of_issue = datetime.now(pytz.timezone('Europe/Moscow'))
+        info_book.return_date = None
 
     db.session.commit()
 
@@ -135,6 +145,22 @@ def add_book():
 
 with app.app_context():
     db.create_all()
+
+
+@app.route('/all_users/<int:id>/put',  methods=['PUT'])
+def put_user(id):
+    info_person = Person.query.get_or_404(id)
+    info_person.surname = request.json['surname']
+    info_person.name = request.json['name']
+    info_person.patronymic = request.json['patronymic']
+    info_person.cafedra = request.json['cafedra']
+    info_person.passport_data = request.json['passport_data']
+    info_person.date_of_birthday = request.json['date_of_birthday']
+    info_person.registration = request.json['registration']
+    info_person.place_of_residence = request.json['place_of_residence']
+    info_person.telephone = request.json['telephone']
+
+    db.session.commit()
 
 
 if __name__ == "__main__":

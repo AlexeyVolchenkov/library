@@ -1,0 +1,24 @@
+{% extends 'pattern.html' %}
+
+{% block title %}
+Обновление данных
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <form method="post">
+        Person
+        <input type="text" name="surname" id="surname" class="input_update form-control" value="{{ info_Person.surname }}" placeholder="surname"><br>
+        <input type="text" name="name" id="name" class="input_update form-control" value="{{ info_Person.name }}" placeholder="name"><br>
+        <input type="text" name="patronymic" id="patronymic" class="input_update form-control" value="{{ info_Person.patronymic }}" placeholder="patronymic"><br>
+        <input type="text" name="cafedra" id="cafedra" class="input_update form-control" value="{{ info_Person.cafedra }}" placeholder="cafedra"><br>
+        <input type="text" name="passport_data" id="passport_data" class="input_update form-control" value="{{ info_Person.passport_data }}" placeholder="passport_data"><br>
+        <input type="text" name="date_of_birthday" id="date_of_birthday" class="input_update form-control" value="{{ info_Person.date_of_birthday }}" placeholder="date_of_birthday"><br>
+        <input type="text" name="registration" id="registration" class="input_update form-control" value="{{ info_Person.registration }}" placeholder="registration"><br>
+        <input type="text" name="place_of_residence" id="place_of_residence" class="input_update form-control" value="{{ info_Person.place_of_residence }}" placeholder="place_of_residence"><br>
+        <input type="text" name="telephone" id="telephone" class="input_update form-control" value="{{ info_Person.telephone }}" placeholder="telephone"><br>
+        <br>
+        <input type="submit" class="btn btn-success" value="Обновить">
+    </form>
+</div>
+{% endblock %}

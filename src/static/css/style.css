@@ -1,0 +1,11 @@
+.input_update {
+    max-width:20%;
+}
+.button_return {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.button_ret {
+    margin-right: 100px;
+}
