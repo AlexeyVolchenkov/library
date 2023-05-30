@@ -1,5 +1,26 @@
 {% extends 'pattern.html' %}
-
+{% block head %}
+<script src="https://www.google.com/jsapi"></script>
+<script>
+   google.load("visualization", "1", {packages:["corechart"]});
+   google.setOnLoadCallback(drawChart);
+   function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+     ['Год', 'Книги'],
+     {% for i in data %}
+     {{ i | safe }},
+     {% endfor %}
+    ]);
+    var options = {
+     title: 'Активность взятия книг',
+     hAxis: {title: 'Дата'},
+     vAxis: {title: 'Кол-во книг'}
+    };
+    var chart = new google.visualization.ColumnChart(document.getElementById('user_activity'));
+    chart.draw(data, options);
+   }
+  </script>
+{% endblock %}
 {% block title %}
 Главная страница
 {% endblock %}
@@ -7,4 +28,7 @@
 
 {% block body %}
 <h1>Главная страница </h1>
+<div id="user_activity" style="width: 100%; height: 400px;">
+
+</div>
 {% endblock %}

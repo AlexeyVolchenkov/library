@@ -4,7 +4,7 @@ from datetime import datetime
 import json
 import pytz
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:AlEx1902345@localhost/library'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@localhost/library'
 
 db = SQLAlchemy(app)
 
@@ -17,7 +17,7 @@ class Person(db.Model):
     surname = db.Column(db.String(40), nullable=False)
     name = db.Column(db.String(40), nullable=False)
     patronymic = db.Column(db.String(40), nullable=False)
-    date_of_issue_id = db.Column(db.DateTime, default=datetime.utcnow)
+    date_of_issue_id = db.Column(db.DateTime, default=datetime.now(pytz.timezone('Europe/Moscow')))
     cafedra = db.Column(db.String(40), nullable=False)
     passport_data = db.Column(db.String(40), nullable=False)
     date_of_birthday = db.Column(db.String(40), nullable=False)
@@ -40,6 +40,29 @@ class Book(db.Model):
 
     def __repr__(self):
         return f"<Person {self.id}>"
+
+
+class Date_book(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    date_of_take = db.Column(db.Date, nullable=False)
+    book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=True)
+
+
+    def __repr__(self):
+        return f"<Date_book {self.id}>"
+
+
+@app.route('/date_of_take')
+def get_date_of_take():
+    info = Date_book.query.order_by(Date_book.date_of_take).all()
+    arr_of_dicts = {}
+    data = []
+    for i in info:
+        data.append(str(i.date_of_take))
+    data_unique = set(data)
+    for i in data_unique:
+        arr_of_dicts[i] = data.count(i)
+    return jsonify(arr_of_dicts)
 
 
 @app.route('/person')
@@ -103,6 +126,9 @@ def put_book(id):
         info_book.date_of_issue = None
         info_book.return_date = datetime.now(pytz.timezone('Europe/Moscow'))
     else:
+        date_book = Date_book(date_of_take=datetime.now(pytz.timezone('Europe/Moscow')).strftime("%Y-%m-%d"),
+                              book_id=request.json['id'])
+        db.session.add(date_book)
         info_book.date_of_issue = datetime.now(pytz.timezone('Europe/Moscow'))
         info_book.return_date = None
 
@@ -143,10 +169,6 @@ def add_book():
         db.session.commit()
 
 
-with app.app_context():
-    db.create_all()
-
-
 @app.route('/all_users/<int:id>/put',  methods=['PUT'])
 def put_user(id):
     info_person = Person.query.get_or_404(id)
@@ -161,6 +183,9 @@ def put_user(id):
     info_person.telephone = request.json['telephone']
 
     db.session.commit()
+
+with app.app_context():
+    db.create_all()
 
 
 if __name__ == "__main__":

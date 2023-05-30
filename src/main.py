@@ -9,7 +9,13 @@ app = Flask(__name__)
 
 @app.route('/')
 def main():
-    return render_template("main.html")
+    articles = requests.get('http://127.0.0.1:5001/date_of_take')
+    data = []
+    data_keys = list(articles.json().keys())
+    data_values = list(articles.json().values())
+    for i in range(len(articles.json())):
+        data.append([data_keys[i], data_values[i]])
+    return render_template("main.html", data=data)
 
 
 @app.route('/all_users')
@@ -66,12 +72,13 @@ def add_book():
 def put_book(id):
     info_Book = requests.get(f'http://127.0.0.1:5001/book/{id}')
     if request.method == "POST":
+
         author = request.form['author']
         name = request.form['name']
         person_id = request.form['person_id']
         requests.put(f'http://127.0.0.1:5001/book/{id}/put',
                      json={"author": author, "name": name,
-                           "person_id": person_id})
+                           "person_id": person_id, "id": id})
         return redirect('/all_books')
     else:
         return render_template("book_update.html", info_Book=info_Book.json())
