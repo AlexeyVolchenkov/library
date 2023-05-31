@@ -65,6 +65,36 @@ def get_date_of_take():
     return jsonify(arr_of_dicts)
 
 
+@app.route('/date_of_take/month')
+def get_date_of_take_month():
+    info = Date_book.query.order_by(Date_book.date_of_take).all()
+    arr_of_dicts = {}
+    data = []
+    for i in info:
+        data.append(i.date_of_take)
+    for i, el in enumerate(data):
+        data[i] = data[i].strftime("%Y-%m")
+    data_unique = set(data)
+    for i in data_unique:
+        arr_of_dicts[i] = data.count(i)
+    return jsonify(arr_of_dicts)
+
+
+@app.route('/date_of_take/year')
+def get_date_of_take_year():
+    info = Date_book.query.order_by(Date_book.date_of_take).all()
+    arr_of_dicts = {}
+    data = []
+    for i in info:
+        data.append(i.date_of_take)
+    for i, el in enumerate(data):
+        data[i] = data[i].strftime("%Y")
+    data_unique = set(data)
+    for i in data_unique:
+        arr_of_dicts[i] = data.count(i)
+    return jsonify(arr_of_dicts)
+
+
 @app.route('/person')
 def get_all_person():
     info = Person.query.order_by(Person.id).all()
@@ -104,6 +134,14 @@ def get_person(id):
     return jsonify(dict_json)
 
 
+@app.route('/all_users/<int:id>/delete')
+def delete_person(id):
+    info_book = Person.query.get(id)
+    db.session.delete(info_book)
+    db.session.commit()
+    return redirect('http://127.0.0.1:5000/all_users')
+
+
 @app.route('/book/<int:id>')
 def get_book(id):
     info_book = Book.query.get(id)
@@ -113,6 +151,14 @@ def get_book(id):
                  'date_of_issue': info_book.date_of_issue,
                  'return_date': info_book.return_date, 'person_id': info_book.person_id}
     return jsonify(dict_json)
+
+
+@app.route('/book/<int:id>/delete')
+def delete_book(id):
+    info_book = Book.query.get(id)
+    db.session.delete(info_book)
+    db.session.commit()
+    return redirect('http://127.0.0.1:5000/all_books')
 
 
 @app.route('/book/<int:id>/put',  methods=['PUT'])

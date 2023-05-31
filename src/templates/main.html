@@ -1,34 +1,23 @@
 {% extends 'pattern.html' %}
 {% block head %}
-<script src="https://www.google.com/jsapi"></script>
-<script>
-   google.load("visualization", "1", {packages:["corechart"]});
-   google.setOnLoadCallback(drawChart);
-   function drawChart() {
-    var data = google.visualization.arrayToDataTable([
-     ['Год', 'Книги'],
-     {% for i in data %}
-     {{ i | safe }},
-     {% endfor %}
-    ]);
-    var options = {
-     title: 'Активность взятия книг',
-     hAxis: {title: 'Дата'},
-     vAxis: {title: 'Кол-во книг'}
-    };
-    var chart = new google.visualization.ColumnChart(document.getElementById('user_activity'));
-    chart.draw(data, options);
-   }
-  </script>
+<link href="../static/css/statistics.css" rel="stylesheet">
 {% endblock %}
 {% block title %}
-Главная страница
+Активность пользователей
 {% endblock %}
 
 
 {% block body %}
-<h1>Главная страница </h1>
-<div id="user_activity" style="width: 100%; height: 400px;">
+<br>
+<h1 style="text-align: center">Активность пользователей</h1>
+<br>
+<div class="ar">
+    <a href="http://127.0.0.1:5000/statistics/week" class="btn btn-success">Неделя</a>
+<a href="http://127.0.0.1:5000/statistics/last_month" class="btn btn-success">За последний месяц</a>
+<a href="http://127.0.0.1:5000/statistics/month" class="btn btn-success">По месяцам</a>
+<a href="http://127.0.0.1:5000/statistics/year" class="btn btn-success">Год</a>
+<a href="http://127.0.0.1:5000/statistics/all" class="btn btn-success">Всё</a>
+</div>
 
 </div>
 {% endblock %}

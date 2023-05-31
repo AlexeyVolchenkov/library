@@ -9,13 +9,66 @@ app = Flask(__name__)
 
 @app.route('/')
 def main():
+    return render_template("main.html")
+
+
+@app.route('/statistics/all')
+def statistics_all():
     articles = requests.get('http://127.0.0.1:5001/date_of_take')
     data = []
     data_keys = list(articles.json().keys())
     data_values = list(articles.json().values())
     for i in range(len(articles.json())):
         data.append([data_keys[i], data_values[i]])
-    return render_template("main.html", data=data)
+    return render_template("statistics.html", data=data)
+
+
+@app.route('/statistics/week')
+def statistics_weak():
+    articles = requests.get('http://127.0.0.1:5001/date_of_take')
+    data = []
+    data_keys = list(articles.json().keys())
+    data_values = list(articles.json().values())
+    for i in range(len(articles.json())):
+        data.append([data_keys[i], data_values[i]])
+    data = data[:-8:-1]
+    data = data[::-1]
+    return render_template("statistics.html", data=data)
+
+
+@app.route('/statistics/last_month')
+def statistics_last_month():
+    articles = requests.get('http://127.0.0.1:5001/date_of_take')
+    data = []
+    data_keys = list(articles.json().keys())
+    data_values = list(articles.json().values())
+    for i in range(len(articles.json())):
+        data.append([data_keys[i], data_values[i]])
+    data = data[:-31:-1]
+    data = data[::-1]
+    return render_template("statistics.html", data=data)
+
+
+@app.route('/statistics/month')
+def statistics_month():
+    articles = requests.get('http://127.0.0.1:5001/date_of_take/month')
+    data = []
+    data_keys = list(articles.json().keys())
+    data_values = list(articles.json().values())
+    for i in range(len(articles.json())):
+        data.append([data_keys[i], data_values[i]])
+    return render_template("statistics.html", data=data)
+
+
+@app.route('/statistics/year')
+def statistics_year():
+    articles = requests.get('http://127.0.0.1:5001/date_of_take/year')
+    data = []
+    data_keys = list(articles.json().keys())
+    data_values = list(articles.json().values())
+    for i in range(len(articles.json())):
+        data.append([data_keys[i], data_values[i]])
+    return render_template("statistics.html", data=data)
 
 
 @app.route('/all_users')

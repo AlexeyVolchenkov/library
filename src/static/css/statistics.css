@@ -1,0 +1,16 @@
+.ar{
+    display: flex;
+    width: 30%;
+    margin: auto;
+}
+
+.ar a{
+    margin: auto;
+    display: inline-block;
+}
+
+.hist {
+    margin: auto;
+    width: 100%;
+    height: 400px;
+}

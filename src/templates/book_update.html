@@ -7,10 +7,10 @@
 {% block body %}
 <div class="container mt-5">
     <form method="post">
-        Person
-        <input type="text" name="author" id="author" class="input_update form-control" value="{{ info_Book.author }}" placeholder="author"><br>
-        <input type="text" name="name" id="name" class="input_update form-control" value="{{ info_Book.name }}" placeholder="name"><br>
-        <input type="text" name="person_id" id="person_id" class="input_update form-control" value="{{ info_Book.person_id }}" placeholder="person_id"> <button class="button_ret">Вернул</button>
+        <input type="text" name="author" id="author" class="input_update form-control" value="{{ info_Book.author }}" placeholder="Автор"><br>
+        <input type="text" name="name" id="name" class="input_update form-control" value="{{ info_Book.name }}" placeholder="Название книги"><br>
+        <input type="text" name="person_id" id="person_id" class="input_update form-control" value="{{ info_Book.person_id }}" placeholder="Номер билета, кому выдана книга"> Чтобы отметить, что книгу вернули, введите 0
+        <br>
         <br>
         <input type="submit" class="btn btn-success" value="Обновить">
     </form>

@@ -6,7 +6,9 @@
 
 
 {% block body %}
-    <h1>Все зарегистрированные пользователи</h1>
+<br>
+    <h1 style="text-align: center">Все зарегистрированные пользователи</h1>
+<br>
     <div class="alert alert-info">
         <b>
           <input class="input_update form-control" id="gfg" type="text"
@@ -16,17 +18,17 @@
         <table class="table table-bordered" id="table-id">
             <thead>
                 <tr>
-                    <th>id</th>
-                    <th>surname</th>
-                    <th>name</th>
-                    <th>patronymic</th>
-                    <th>date_of_issue_id</th>
-                    <th>cafedra</th>
-                    <th>passport_data</th>
-                    <th>date_of_birthday</th>
-                    <th>registration</th>
-                    <th>place_of_residence</th>
-                    <th>telephone</th>
+                    <th>Номер билета</th>
+                    <th>Фамилия</th>
+                    <th>Имя</th>
+                    <th>Отчество</th>
+                    <th>Дата регистрации</th>
+                    <th>Номер кафедры</th>
+                    <th>Паспортные данные</th>
+                    <th>Дата рождения</th>
+                    <th>Место регистраци</th>
+                    <th>Место рождения</th>
+                    <th>Номер телефона</th>
                 </tr>
             </thead>
             <tbody id="geeks">
@@ -43,7 +45,10 @@
                         <td>{{ el.registration }}</td>
                         <td>{{ el.place_of_residence }}</td>
                         <td>{{ el.telephone }}</td>
-                        <td><a href="/all_users/{{el.id}}/put" class="btn btn-warning">Изменить</a></td>
+                        <td>
+                            <a href="/all_users/{{el.id}}/put" class="btn btn-warning">Изменить</a>
+                            <a href="http://127.0.0.1:5001/all_users/{{el.id}}/delete" class="btn btn-danger">Удалить</a>
+                        </td>
                     </tr>
             {% endfor %}
             </tbody>

@@ -6,7 +6,9 @@
 
 
 {% block body %}
-    <h1>Все книги</h1>
+<br>
+    <h1 style="text-align: center">Все книги</h1>
+<br>
     <div class="alert alert-info">
         <b>
           <input class="input_update form-control" id="gfg" type="text"
@@ -16,12 +18,12 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>id</th>
-                    <th>author</th>
-                    <th>name</th>
-                    <th>date_of_issue</th>
-                    <th>return_date</th>
-                    <th>person_id</th>
+                    <th>Номер книги</th>
+                    <th>Автор</th>
+                    <th>Название книги</th>
+                    <th>Дата выдачи</th>
+                    <th>Дата возвращения</th>
+                    <th>Номер билета, кому выдана книга</th>
                 </tr>
             </thead>
             <tbody id="geeks">
@@ -33,7 +35,8 @@
                         <td>{{ el.date_of_issue }}</td>
                         <td>{{ el.return_date }}</td>
                         <td>{{ el.person_id }}</td>
-                        <td><a href="/book/{{el.id}}/put" class="btn btn-warning">Изменить</a>
+                        <td>
+                            <a href="/book/{{el.id}}/put" class="btn btn-warning">Изменить</a>
                             <a href="http://127.0.0.1:5001/book/{{el.id}}/delete" class="btn btn-danger">Удалить</a>
                         </td>
                     </tr>
