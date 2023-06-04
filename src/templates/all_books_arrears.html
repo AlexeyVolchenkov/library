@@ -7,16 +7,9 @@
 
 {% block body %}
 <br>
-    <h1 style="text-align: center">Все книги</h1>
+    <h1 style="text-align: center">Задолженности</h1>
 <br>
-<form method="post">
-    <div style="">
-        <input style="width: 20%" type="number" min="0" name="arrears" id="arrears" class="form-control"  placeholder="Введите время задолженности (в днях):" required><br>
-        <input type="submit" class="btn btn-warning" value="Задолженности">
-    </div>
-</form>
-<br>
-<br>
+<h3 style="padding-left: 40px">Время задолженности: {{ arrears }} дней</h3>
     <div class="alert alert-info">
         <b>
           <input class="input_update form-control" id="gfg" type="text"

@@ -3,6 +3,9 @@ from flask_sqlalchemy import SQLAlchemy
 import requests
 import json
 import psycopg2
+import pytz
+from datetime import datetime, timedelta
+from dateutil.parser import parse
 
 app = Flask(__name__)
 
@@ -77,10 +80,26 @@ def all_users():
     return render_template("all_users.html", articles_person=info_person.json())
 
 
-@app.route('/all_books')
+@app.route('/all_books', methods=['POST', 'GET'])
 def all_books():
-    info_book = requests.get('http://127.0.0.1:5001/book')
-    return render_template("all_books.html", articles_books=info_book.json())
+    info_book = requests.get('http://127.0.0.1:5001/book').json()
+    if request.method == "POST":
+        arrears = int(request.form['arrears'])
+        return redirect(f"/all_books/arrears/{arrears}")
+    return render_template("all_books.html", articles_books=info_book)
+
+
+@app.route('/all_books/arrears/<int:arrears>', methods=['POST', 'GET'])
+def all_books_arrears(arrears):
+    info_book = requests.get('http://127.0.0.1:5001/book').json()
+    data_arrears = []
+    for i in info_book:
+        if type(i["date_of_issue"]) == str:
+            new_time = parse(i["date_of_issue"])
+            time_now = datetime.now(pytz.timezone('Europe/Moscow')).strftime("%Y-%m-%d")
+            if new_time.date() + timedelta(days=arrears) < parse(time_now).date():
+                data_arrears.append(i)
+    return render_template("all_books_arrears.html", articles_books=data_arrears, arrears=arrears)
 
 
 @app.route('/add_person', methods=['POST', 'GET'])

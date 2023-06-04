@@ -4,7 +4,7 @@ from datetime import datetime
 import json
 import pytz
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@localhost/library'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:AlEx1902345@localhost/library'
 
 db = SQLAlchemy(app)
 
